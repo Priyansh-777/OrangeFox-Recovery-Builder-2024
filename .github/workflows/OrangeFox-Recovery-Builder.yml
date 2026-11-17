@@ -11,11 +11,11 @@ on:
         options:
         - 14.1
         - 12.1
-        - 11.0
+        - 16.0
       DEVICE_TREE:
         description: 'Custom Recovery Tree'
         required: true
-        default: 'https://github.com/kinguser981/android_device_xiaomi_marble-OFRP'
+        default: https://github.com/Priyansh-777/android_device_oplus_prado_twrp.git'
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch'
         required: true
@@ -23,11 +23,11 @@ on:
       DEVICE_PATH:
         description: 'Specify your device path.'
         required: true
-        default: 'device/xiaomi/marble'
+        default: 'device/oplus/prado'
       DEVICE_NAME:
         description: 'Specify your Device Codename.'
         required: true
-        default: 'marble'
+        default: 'prado'
       BUILD_TARGET:
         description: 'Specify your Build Target'
         required: true
@@ -90,7 +90,7 @@ jobs:
         sudo bash setup/android_build_env.sh
       
     - name: Set-up Manifest
-      if: github.event.inputs.MANIFEST_BRANCH == '11.0' || github.event.inputs.MANIFEST_BRANCH == '12.1' || github.event.inputs.MANIFEST_BRANCH == '14.1'
+      if: github.event.inputs.MANIFEST_BRANCH == '16.0' || github.event.inputs.MANIFEST_BRANCH == '12.1' || github.event.inputs.MANIFEST_BRANCH == '14.1'
       run: |
         mkdir -p ${GITHUB_WORKSPACE}/OrangeFox
         cd ${GITHUB_WORKSPACE}/OrangeFox
@@ -111,7 +111,7 @@ jobs:
       uses: haya14busa/action-cond@v1
       id: fox_branch
       with:
-        cond: ${{ github.event.inputs.MANIFEST_BRANCH == '11.0' || github.event.inputs.MANIFEST_BRANCH == '12.1' }}
+        cond: ${{ github.event.inputs.MANIFEST_BRANCH == '16.0' || github.event.inputs.MANIFEST_BRANCH == '12.1' }}
         if_true: lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ github.event.inputs.BUILD_TARGET }}image
         if_false: lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka ${{ github.event.inputs.BUILD_TARGET }}image
       
